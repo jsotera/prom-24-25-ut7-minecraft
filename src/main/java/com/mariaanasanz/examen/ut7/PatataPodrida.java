@@ -1,22 +1,17 @@
 package com.mariaanasanz.examen.ut7;
 
-public class PatataPodrida {
-
-    public int cantidad;
+public class PatataPodrida extends Item {
 
     public PatataPodrida(int cantidad){
-        this.cantidad = cantidad;
+        super(cantidad);
     }
 
-    public void usar(Object objetivo) {
-        if(cantidad>0 && objetivo instanceof Jugador){
-            System.out.println(((Jugador)objetivo).getNombre()+" ha usado "+this.getNombre()+"["+cantidad+"]");
-            ((Jugador) objetivo).recibirAtaque(5);
+    @Override
+    public void usar(Entidad objetivo) {
+        if(cantidad>0){
+            System.out.println(objetivo.getNombre()+" ha usado "+this.getNombre()+"["+cantidad+"]");
+            objetivo.recibirAtaque(5);
             cantidad--;
         }
-    }
-
-    public String getNombre() {
-        return this.getClass().getSimpleName();
     }
 }

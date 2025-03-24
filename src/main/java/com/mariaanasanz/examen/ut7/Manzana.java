@@ -1,22 +1,17 @@
 package com.mariaanasanz.examen.ut7;
 
-public class Manzana {
-
-    public int cantidad;
+public class Manzana extends Item {
 
     public Manzana(int cantidad){
-        this.cantidad = cantidad;
+        super(cantidad);
     }
 
-    public void usar(Object objetivo) {
-        if(cantidad>0 && objetivo instanceof Jugador){
-            System.out.println(((Jugador)objetivo).getNombre()+" ha usado 1 "+this.getNombre()+"["+cantidad+"]");
-            ((Jugador) objetivo).sanar(10);
+    @Override
+    public void usar(Entidad objetivo) {
+        if(cantidad>0){
+            System.out.println(objetivo.getNombre()+" ha usado "+this.getNombre()+"["+cantidad+"]");
+            objetivo.sanar(10);
             cantidad--;
         }
-    }
-
-    public String getNombre() {
-        return this.getClass().getSimpleName();
     }
 }

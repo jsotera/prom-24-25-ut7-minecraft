@@ -3,21 +3,19 @@ package com.mariaanasanz.examen.ut7;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author xxxx xxxx xxxx
- */
 public class Partida {
     public static void main(String[] args) {
         // Crear jugadores
-        List<Object> jugadores = new ArrayList<>();
+        // todo: aqui hacer clonable
+        List<Entidad> jugadores = new ArrayList<>();
         Jugador steve = new Jugador("Steve");
         steve.introducirItemAInventario(new Manzana(10));
         steve.introducirItemAInventario(new PatataPodrida(1));
         jugadores.add(steve);
-        // TODO: Steve se siente solo, clonalo e incluye a su hermano gemelo (Alex) a la lista de jugadores
+        jugadores.add(new Jugador("Alex"));
 
         // Crear mobs
-        List<Object> mobs = new ArrayList<>();
+        List<Entidad> mobs = new ArrayList<>();
         mobs.add(new Zombie());
         mobs.add(new Creeper());
         mobs.add(new Esqueleto());
@@ -27,59 +25,38 @@ public class Partida {
 
         // Los jugadores interactúan con los mobs
         while(mobs.size()>0 && jugadores.size()>0){
-            // TODO: Obtener el mob que mas dano haga en vez de uno aleatorio
             int randomMobIndex = (int) (Math.random()*mobs.size());
-            Object randomMob = mobs.get(randomMobIndex);
+            // todo: aqui coger el mob que mas dano o mas vida tenga, con un comparator
+            Entidad randomMob = mobs.get(randomMobIndex);
 
-            // TODO: Obtener el jugador con mas vida en vez de uno aleatorio
+            // Entidad randomPlayer = seleccionarJugador();
             int randomPlayerIndex = (int) (Math.random()*jugadores.size());
-            Object randomPlayer = jugadores.get(randomPlayerIndex);
+            Entidad randomPlayer = jugadores.get(randomPlayerIndex);
             double randomOrder = Math.random();
             boolean esDerrotado = false;
             if(randomOrder<0.5){
-                if(randomPlayer instanceof Jugador) {
-                    esDerrotado = ((Jugador) randomPlayer).atacar(randomMob);
-                    if (esDerrotado) {
-                        mobs.remove(randomMob);
-                        if(randomMob instanceof Creeper){
-                            System.out.println(((Creeper)randomMob).getNombre() + " HA MUERTO");
-                        } else if (randomMob instanceof Esqueleto) {
-                            System.out.println(((Esqueleto)randomMob).getNombre() + " HA MUERTO");
-                        } else if (randomMob instanceof Zombie) {
-                            System.out.println(((Zombie)randomMob).getNombre() + " HA MUERTO");
-                        }
-                    }
+                // todo: Aquí que ataque el jugador que mas vida tenga o dano, comparable
+                esDerrotado = randomPlayer.atacar(randomMob);
+                if(esDerrotado){
+                    mobs.remove(randomMob);
+                    System.out.println(randomMob.getNombre() + " HA MUERTO");
                 }
             } else {
-                if(randomMob instanceof Creeper){
-                    esDerrotado = ((Creeper)randomMob).atacar(randomPlayer);
-                    if (esDerrotado) {
-                        jugadores.remove(randomPlayer);
-                        if(randomPlayer instanceof Jugador){
-                            System.out.println(((Jugador)randomPlayer).getNombre() + " HA MUERTO");
-                        }
-                    }
-                } else if (randomMob instanceof Esqueleto) {
-                    esDerrotado = ((Esqueleto)randomMob).atacar(randomPlayer);
-                    if (esDerrotado) {
-                        jugadores.remove(randomPlayer);
-                        if(randomPlayer instanceof Jugador){
-                            System.out.println(((Jugador)randomPlayer).getNombre() + " HA MUERTO");
-                        }
-                    }
-                } else if (randomMob instanceof Zombie) {
-                    esDerrotado = ((Zombie)randomMob).atacar(randomPlayer);
-                    if (esDerrotado) {
-                        jugadores.remove(randomPlayer);
-                        if(randomPlayer instanceof Jugador){
-                            System.out.println(((Jugador)randomPlayer).getNombre() + " HA MUERTO");
-                        }
-                    }
+                esDerrotado = randomMob.atacar(randomPlayer);
+                if(esDerrotado){
+                    jugadores.remove(randomPlayer);
+                    System.out.println(randomPlayer.getNombre() + " HA MUERTO");
                 }
             }
         }
 
-        // TODO: Mostrar un listado de jugadores ordenados por nivel y experiencia
+        // TODO: los que mas dano hacen son
+
+        // TODO: los que mas vida tienen son
+
+        // TODO: El jugador con mas items
+
+        // TODO: El jugador con mayor nivel y experiencia
     }
 }
 
